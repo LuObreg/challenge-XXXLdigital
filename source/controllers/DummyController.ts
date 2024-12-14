@@ -13,14 +13,25 @@ export default class DummyController {
     this.dummyFunction.toString();
     return dummyValue;
   }
+  // 1. check if it exists
+  // 2. check if its valid
+  // 3. check if its CH
+  // 4. continue on its own service
+
   checkCountryCode(code: string, uid: string){
+    try {
       const obj = countryCodeCatalogue.find(entry => entry.countryCode === code);
       if(!obj){
-        console.log('country not found');
-        return {code, uid}
+        throw new Error('bad_request')
       }
-      console.log(obj)
       const regex = new RegExp(obj.regex);
-      return regex.test(uid);
+      const isValid = regex.test(uid);
+      if(!isValid){
+        throw new Error('not_implemented');
+      }
+      return {code, uid}
+    } catch (error) {
+      throw error;
+    }
   }
 }

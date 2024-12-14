@@ -35,8 +35,9 @@ const router = (configuration: Configuration): Router => {
         .checkCountryCode(countryCode, uid)
         res.status(200).json(response)
       } catch (error) {
-        res.status(401).json(error)
-      }
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        res.status(401).json({ message: errorMessage }); // Enviar el mensaje de error en la respuesta
+            }
     }
   );
 
