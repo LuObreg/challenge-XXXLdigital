@@ -8,7 +8,7 @@ let dummyController: DummyController;
 const requestSchema = z.object({
   countryCode: z.string().length(2, { message: "Must be exactly 2 characters long" }),
   uid: z.string()
-});
+}).strict();
 
 const validateRequest = (schema: z.ZodObject<any, any, any>) => (req: Request, res: Response, next: NextFunction) => {
   const result = schema.safeParse(req.body);

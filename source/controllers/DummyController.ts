@@ -9,14 +9,10 @@ export default class DummyController {
     this.configuration = configuration;
   }
 
-  async dummyFunction(dummyValue: boolean): Promise<boolean> {
-    this.dummyFunction.toString();
-    return dummyValue;
-  }
   // 1. check if it exists
   // 2. check if its valid
   // 3. check if its CH
-  // 4. continue on its own service
+  // 4. check in its own service
 
   checkCountryCode(code: string, uid: string){
     try {
@@ -30,6 +26,21 @@ export default class DummyController {
         throw new Error('not_implemented');
       }
       return {code, uid}
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  isSwiss(code: string): boolean{
+    return code == 'CH' ? true : false;
+  }
+
+  async processCountryCode(code: string, uid: string){
+    try {
+      this.checkCountryCode(code, uid);
+      let isEuro = !(this.isSwiss(code));
+      // return await isEuro ? euroService.checkUid(uid) : swissService.checkUid(uid);
+      return Promise.resolve(isEuro);
     } catch (error) {
       throw error;
     }
