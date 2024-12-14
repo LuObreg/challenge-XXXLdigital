@@ -1,0 +1,11 @@
+{
+    "port": 3000,
+    "expressServerOptions": {
+      "keepAliveTimeout": 5000,
+      "maxHeadersCount": 100,
+      "timeout": 30000,
+      "maxConnections": 1000,
+      "headersTimeout": 20000,
+      "requestTimeout": 30000
+    }
+  }
