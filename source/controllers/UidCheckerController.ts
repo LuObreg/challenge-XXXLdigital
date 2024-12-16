@@ -2,7 +2,7 @@ import { Configuration } from "../models/ConfigurationModel";
 import { countryCodeCatalogue } from '../documents/countryCodeCatalogue.js';
 
 
-export default class DummyController {
+export default class UidCheckerController {
   configuration: Configuration;
 
   constructor(configuration: Configuration) {

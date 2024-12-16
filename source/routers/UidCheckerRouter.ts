@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import DummyController from "../controllers/DummyController.js";
+import UidCheckerController from "../controllers/UidCheckerController.js";
 import { Configuration } from "../models/ConfigurationModel.js";
 
-let dummyController: DummyController;
+let uidCheckerController: UidCheckerController;
 
 const requestSchema = z.object({
   countryCode: z.string().length(2, { message: "Must be exactly 2 characters long" }),
@@ -24,19 +24,19 @@ const router = (configuration: Configuration): Router => {
     strict: true,
   });
 
-  dummyController = new DummyController(configuration);
+  uidCheckerController = new UidCheckerController(configuration);
   expressRouter.post(
     "/validate",
     validateRequest(requestSchema),
     (req: Request, res: Response) => {
       const { countryCode, uid } = req.body;
       try {
-        const response = dummyController
+        const response = uidCheckerController
         .checkCountryCode(countryCode, uid)
         res.status(200).json(response)
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        res.status(401).json({ message: errorMessage }); // Enviar el mensaje de error en la respuesta
+        res.status(401).json({ message: errorMessage }); 
             }
     }
   );

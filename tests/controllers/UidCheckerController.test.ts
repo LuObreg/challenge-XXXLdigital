@@ -1,4 +1,4 @@
-import DummyController from '../../source/controllers/DummyController';
+import UidCheckerController from '../../source/controllers/UidCheckerController';
 import { Configuration } from "../../source/models/ConfigurationModel";
 
 const mockConfiguration: Configuration = {
@@ -13,11 +13,11 @@ const mockConfiguration: Configuration = {
     }
   };
   
-  describe('DummyController', () => {
-    let controller: DummyController;
+  describe('UidCheckerController', () => {
+    let controller: UidCheckerController;
   
     beforeEach(() => {
-      controller = new DummyController(mockConfiguration);
+      controller = new UidCheckerController(mockConfiguration);
     });
     it('should initialize with given configuration', () => {
         expect(controller.configuration.port).toBe(3000);

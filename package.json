@@ -1,8 +1,8 @@
 {
-  "name": "servicename",
+  "name": "uidchecker",
   "version": "0.1.0",
   "private": true,
-  "description": "Description of the service",
+  "description": "A service to validate UID numbers by interacting with external web services.",
   "repository": {
     "type": "git",
     "url": ""
