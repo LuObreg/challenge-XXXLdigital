@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import UidCheckerController from "../controllers/UidCheckerController.js";
 import { Configuration } from "../models/ConfigurationModel.js";
+import { errorCatalogue } from "../documents/errorCatalogue.js";
 
 let uidCheckerController: UidCheckerController;
 
@@ -28,15 +29,16 @@ const router = (configuration: Configuration): Router => {
   expressRouter.post(
     "/validate",
     validateRequest(requestSchema),
-    (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
       const { countryCode, uid } = req.body;
       try {
-        const response = uidCheckerController
-        .checkCountryCode(countryCode, uid)
+        const response = await uidCheckerController
+        .processCountryCode(countryCode, uid)
         res.status(200).json(response)
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        res.status(401).json({ message: errorMessage }); 
+        const errorObj = errorCatalogue.find(entry => entry.code === errorMessage) || { statusCode: 500, message: 'Unknown error' };
+        res.status(errorObj?.statusCode).json({ code: errorObj?.statusCode, message: errorObj?.message }); 
             }
     }
   );

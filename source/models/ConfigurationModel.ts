@@ -11,10 +11,15 @@ type ExpressServerOptions = Pick<
   | "requestTimeout"
 >;
 
+type Services = {
+  euServiceURL: string;
+  switzerlandServiceURL: string;
+};
+
 export interface Configuration {
-  // TO_CHANGE: add your needed configuration parameters
   readonly port: number;
   readonly expressServerOptions: ExpressServerOptions;
+  readonly services: Services;
 }
 
 export const readAppConfiguration = (file: string): Configuration => {

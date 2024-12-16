@@ -10,6 +10,10 @@ const mockConfiguration: Configuration = {
       maxConnections: 100,
       headersTimeout: 10000,
       requestTimeout: 5000
+    },
+    services: {
+      euServiceURL: 'http://EU',
+      switzerlandServiceURL: 'http://CH'
     }
   };
   

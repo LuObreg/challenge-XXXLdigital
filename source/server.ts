@@ -1,7 +1,7 @@
 import express, { Express, Router, json } from "express";
 import responseTime from "response-time";
 import Helmet from "helmet";
-import UidCheckerRouter from "./routers/UidCheckerRouter";
+import UidCheckerRouter from "./routers/UidCheckerRouter.js";
 import { Configuration } from "./models/ConfigurationModel.js";
 
 export default function createApp(configuration: Configuration): {

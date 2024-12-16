@@ -7,5 +7,9 @@
       "maxConnections": 1000,
       "headersTimeout": 20000,
       "requestTimeout": 30000
+    },
+    "services": {
+      "euServiceURL": "https://ec.europa.eu/taxation_customs/vies/rest-api//check-vat-number",
+      "switzerlandServiceURL": "https://www.uid-wse-a.admin.ch/V5.0/PublicServices.svc?wsdl=wsdl0"
     }
   }

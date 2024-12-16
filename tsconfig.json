@@ -10,7 +10,8 @@
     "strict": true,
     "outDir": "./build",
     "sourceMap": true,
-    "lib": ["ES2022"]
+    "lib": ["ES2022"],
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["./source/**/*.ts", "tests", "source/documents/countryCodeCatalogue.ts"]
 }
