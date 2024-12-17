@@ -7,17 +7,30 @@ import { errorCatalogue } from "../documents/errorCatalogue.js";
 let uidCheckerController: UidCheckerController;
 
 const requestSchema = z.object({
-  countryCode: z.string().length(2, { message: "Must be exactly 2 characters long" }),
+  countryCode: z.string().length(2, { message: "must be exactly 2 characters long. " }),
   uid: z.string()
 }).strict();
 
-const validateRequest = (schema: z.ZodObject<any, any, any>) => (req: Request, res: Response, next: NextFunction) => {
-  const result = schema.safeParse(req.body);
-  if (!result.success) {
-    return res.status(400).json({ error: result.error.errors });
-  }
-  next();
-};
+const validateRequest = (schema: z.ZodObject<any, any, any>) => 
+  (req: Request, res: Response, next: NextFunction) => {
+    const result = schema.safeParse(req.body);
+    if (!result.success) {
+      const errorMessages = result.error.errors
+        .map((error) => {
+          const field = error.path.join('.');
+          return `${field} ${error.message}`;
+        })
+        .join(' ');
+        const errorObj = errorCatalogue.find((entry) => entry.code === 'bad_request') || 
+        { statusCode: 400, code: 'bad_request'};
+
+return res.status(errorObj.statusCode).json({
+code: errorObj.code,
+message: errorMessages,
+});    }
+    next();
+  };
+
 
 const router = (configuration: Configuration): Router => {
   const expressRouter: Router = Router({
