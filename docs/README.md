@@ -16,10 +16,9 @@ The service acts as a unified interface for interacting with multiple external w
 
 ## 🚀 Features
 - **Country-Based Routing**: Directs requests to the relevant external service based on the `countryCode`.
-- **UID Validation**: Checks format and existence of UID numbers.
+- **UID Pre-Validation**: Checks format of UID numbers before sending the requests.
+- **UID Validation**: Checks the existance of UID numbers in official sources.
 - **Error Handling**: Provides standardized error responses.
-- **Extensibility**: Easily expandable to support additional regions.
-- **Stateless API**: Designed for scalability and performance.
 
 ---
 
@@ -35,3 +34,40 @@ The service acts as a unified interface for interacting with multiple external w
    cd <repository_name>
 2. Install dependencies
     `npm install`
+3. Build and run the app 
+      `npm run start`
+
+### Example Usage
+Send a POST request to the /validation endpoint:
+
+   ```bash
+   curl -X POST http://localhost:3000/validation \
+   -H "Content-Type: application/json" \
+   -d '{
+      "countryCode": "CH",
+      "uid": "123456789"
+      }'
+   ```
+
+#### Request Parameters:
+
+`countryCode (string)`: The country code in ISO 2 format (e.g., CH for Switzerland).
+`uid (string)`: The UID number to be validated.
+
+#### Example Response
+
+```json
+{
+    "validated": true,
+    "details": "UID is valid for the given country code"
+}
+```
+
+#### Example Error Response
+
+```json
+{
+    "code": 400,
+    "message": "Bad request"
+}
+```
