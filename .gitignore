@@ -3,3 +3,4 @@ build
 coverage
 *.http
 *.txt
+launch.json

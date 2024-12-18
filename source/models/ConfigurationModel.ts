@@ -1,14 +1,14 @@
-import { Server } from "http";
-import fs from "fs";
+import { Server } from 'http';
+import fs from 'fs';
 
 type ExpressServerOptions = Pick<
   Server,
-  | "keepAliveTimeout"
-  | "maxHeadersCount"
-  | "timeout"
-  | "maxConnections"
-  | "headersTimeout"
-  | "requestTimeout"
+  | 'keepAliveTimeout'
+  | 'maxHeadersCount'
+  | 'timeout'
+  | 'maxConnections'
+  | 'headersTimeout'
+  | 'requestTimeout'
 >;
 
 type Services = {
@@ -23,9 +23,9 @@ export interface Configuration {
 }
 
 export const readAppConfiguration = (file: string): Configuration => {
-  const configuration: Configuration = JSON.parse(
-    fs.readFileSync(file, "utf-8")
-  );
+    const configuration: Configuration = JSON.parse(
+        fs.readFileSync(file, 'utf-8')
+    );
 
-  return configuration;
+    return configuration;
 };

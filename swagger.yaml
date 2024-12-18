@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: UID Validator
+  description: A service to validate UID numbers by interacting with external web services.
+  version: 1.0.0
+paths:
+  /validate:
+    post:
+      summary: Validate UID based on country code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: The country code (e.g., 'CH', 'DE')
+                  example: 'CH'
+                uid:
+                  type: string
+                  description: The UID to validate
+                  example: 'CHE-116.281.710'
+      responses:
+        '200':
+          description: Successful validation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  validated:
+                    type: boolean
+                    description: Whether the UID was validated successfully
+                    example: true
+                  details:
+                    type: string
+                    description: A message providing more details about the validation
+                    example: "UID is valid for the given country code"
+        '400':
+          description: Bad Request (Invalid Format)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: Error code indicating the type of issue
+                    example: "bad_request"
+                  message:
+                    type: string
+                    description: Error message describing the validation failure
+                    example: 'countryCode must be exactly 2 characters long.'
+        '501':
+          description: Not Implemented (Unsupported Country)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: Error code for unsupported countries
+                    example: 'not_implemented'
+                  message:
+                    type: string
+                    description: Message indicating that the country code is not implemented
+                    example: 'Not Implemented'
+        '404':
+          description: External Service Unreachable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: Error code indicating the service is unreachable
+                    example: 'service_error'
+                  message:
+                    type: string
+                    description: Error message indicating the service could not be reached
+                    example: 'The external service could not be reached'
+        '500':
+          description: Unknown error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: Error code indicating that an error ocurred
+                    example: 'unknown_error'
+                  message:
+                    type: string
+                    description: Error message indicating that an unknown error ocurred
+                    example: 'Unknown error'

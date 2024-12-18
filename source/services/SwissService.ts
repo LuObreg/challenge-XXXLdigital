@@ -1,29 +1,29 @@
 export default class SwissService {
-  static async checkCode(serviceURL: string, uid: string) {
-    try {
-    const response = await fetch(serviceURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/xml',
-            'SOAPAction': 'http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/ValidateUID',
-      },
-      body: `<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Header />
-  <soap:Body>
-    <ValidateUID xmlns="http://www.uid.admin.ch/xmlns/uid-wse">
-      <uid>${uid}</uid>
-    </ValidateUID>
-  </soap:Body>
-</soap:Envelope>`,
-    });
+    static async checkCode(serviceURL: string, uid: string) {
+        try {
+            const response = await fetch(serviceURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/xml',
+                    'SOAPAction': 'http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/ValidateUID',
+                },
+                body: `<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                <soap:Header />
+                <soap:Body>
+                <ValidateUID xmlns="http://www.uid.admin.ch/xmlns/uid-wse">
+                <uid>${uid}</uid>
+                </ValidateUID>
+                </soap:Body>
+                </soap:Envelope>`,
+            });
 
-    return await response.text()
-    } catch (error) {
-      throw new Error('service_error');
+            return await response.text();
+        } catch (error) {
+            console.log({error});
+            throw new Error('service_error');
+        }
     }
-
-  }
 }
 
 /**
