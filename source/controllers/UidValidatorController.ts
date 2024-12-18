@@ -17,10 +17,19 @@ export default class UidValidatorController {
         this.configuration = configuration;
     }
 
-    // 1. check if it exists
-    // 2. check if its valid
+    // 1. check if it exists in countryCode Catalogue
+    // 2. check if its valid with its regex
     // 3. check if its CH
     // 4. check in its own service
+    
+    async processCountryCode(code: string, uid: string): Promise<responseObj>{
+        this.checkCountryCode(code, uid);
+        const isSwiss = this.isSwiss(code);
+        const {euServiceURL, switzerlandServiceURL} = this.configuration.services;
+        const serviceRes: unknown = isSwiss ? await SwissService.checkCode(switzerlandServiceURL, uid) : await EuropeService.checkCode(euServiceURL, uid, code);
+        console.log({serviceRes});
+        return await this.evaluateResponse(serviceRes, isSwiss);
+    }
 
     checkCountryCode(code: string, uid: string){
         const obj = countryCodeCatalogue.find(entry => entry.countryCode === code);
@@ -40,23 +49,13 @@ export default class UidValidatorController {
         return code == 'CH' ? true : false;
     }
 
-    async processCountryCode(code: string, uid: string): Promise<responseObj>{
-        this.checkCountryCode(code, uid);
-        const isSwiss = this.isSwiss(code);
-        const {euServiceURL, switzerlandServiceURL} = this.configuration.services;
-        const serviceRes: unknown = isSwiss ? await SwissService.checkCode(switzerlandServiceURL, uid) : await EuropeService.checkCode(euServiceURL, uid, code);
-        console.log({serviceRes});
-        return await this.evaluateResponse(serviceRes, isSwiss);
-       
-    }
-
     async evaluateResponse(response: any, isSwiss: boolean): Promise<responseObj>{
         const valid: boolean= isSwiss ? await this.processSwissRes(response) : this.processEURes(response); 
         return {validated: valid,
             details: valid ? 'UID is valid for the given country code' : 'UID is not valid for the given country code'
         };
-
     }
+    
     async processSwissRes(res: string): Promise<boolean> {
         try {
             const parsedRes = await parseStringPromise(res);
