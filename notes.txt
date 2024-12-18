@@ -1,0 +1,10 @@
+## TO DO - What I'd do for a prod environment
+- Move urls from config to env
+- Implement logging
+- Changelog
+
+Libraries that I installed:
+- eslint
+- xml2js to handle the request to the swiss service
+
+* I included the file rest.http that I use to make requests to the API using the REST client extension in VSCode

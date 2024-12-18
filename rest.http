@@ -1,0 +1,64 @@
+### swiss ok
+
+POST http://localhost:3000/validate HTTP/1.1
+content-type: application/json
+
+{
+    "countryCode": "CH",
+    "uid": "CHE-116.281.710"
+}
+
+### swiss not valid
+
+POST http://localhost:3000/validate HTTP/1.1
+content-type: application/json
+
+{
+    "countryCode": "CH",
+    "uid": "CHE-123.456.789"
+}
+#### invalid regex
+POST http://localhost:3000/validate HTTP/1.1
+content-type: application/json
+
+{
+    "countryCode": "CH",
+    "uid": "C-123.456.789"
+}
+
+#### EU not valid
+POST http://localhost:3000/validate HTTP/1.1
+content-type: application/json
+
+{
+    "countryCode": "DE",
+    "uid": "DE325114412"
+}
+
+#### EU not valid
+POST http://localhost:3000/validate HTTP/1.1
+content-type: application/json
+
+{
+    "countryCode": "AT",
+    "uid": "ATU65296645"
+}
+
+
+#### Country not found
+POST http://localhost:3000/validate HTTP/1.1
+content-type: application/json
+
+{
+    "countryCode": "XX",
+    "uid": "as"
+    }
+
+### Invalid request format
+POST http://localhost:3000/validate HTTP/1.1
+content-type: application/json
+
+{
+    "countryCode": "CHE",
+    "uid": "123456789"
+    }
